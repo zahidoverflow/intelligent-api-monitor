@@ -6,6 +6,8 @@ import { monitorRouter } from './routes/monitorRoutes.js';
 import { alertRouter } from './routes/alertRoutes.js';
 import { metricRouter } from './routes/metricRoutes.js';
 
+import { INDEX_HTML, STYLE_CSS, APP_JS } from './views/staticAssets.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -16,13 +18,23 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Serve frontend UI
+// Serve frontend UI statically if files exist on disk
 app.use(express.static(path.join(__dirname, '../public')));
 
-// Root route handler
-app.get('/', (req, res) => {
-  const indexPath = path.join(__dirname, '../public/index.html');
-  res.sendFile(indexPath);
+// Explicit frontend routes (works across local and serverless with 0 filesystem dependencies)
+app.get(['/', '/index.html'], (req, res) => {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.send(INDEX_HTML);
+});
+
+app.get('/css/style.css', (req, res) => {
+  res.setHeader('Content-Type', 'text/css; charset=utf-8');
+  res.send(STYLE_CSS);
+});
+
+app.get('/js/app.js', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+  res.send(APP_JS);
 });
 
 // API Health Check
