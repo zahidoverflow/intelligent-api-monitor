@@ -225,5 +225,5 @@ curl http://localhost:4000/metrics/summary
 ## 📄 License & Author
 
 - **Author**: Zahidul Islam ([@zahidoverflow](https://github.com/zahidoverflow))
-- **Email**: [zahidul.islam.dev@gmail.com](mailto:zahidul.islam.dev@gmail.com)
+- **Email**: [zahidoverflow@gmail.com](mailto:zahidoverflow@gmail.com)
 - **License**: MIT
