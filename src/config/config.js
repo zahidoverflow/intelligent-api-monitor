@@ -10,7 +10,7 @@ const ROOT_DIR = path.resolve(__dirname, '../..');
 export const config = {
   port: parseInt(process.env.PORT || '4000', 10),
   env: process.env.NODE_ENV || 'development',
-  dbPath: process.env.DB_PATH || path.join(ROOT_DIR, 'data', 'monitor.db'),
+  dbPath: process.env.DB_PATH || (process.env.VERCEL ? path.join('/tmp', 'monitor.db') : path.join(ROOT_DIR, 'data', 'monitor.db')),
 
   // Anomaly Detection Thresholds
   thresholds: {
