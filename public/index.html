@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulseGuard AI | Intelligent API Monitoring & Alert System</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="navbar">
+    <div class="brand">
+      <div class="brand-icon">🛡️</div>
+      <div>
+        <div class="brand-title">PulseGuard AI</div>
+        <div class="brand-subtitle">Intelligent API Health Telemetry & Anomaly Diagnostics</div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <span class="live-badge">
+        <span class="pulse-dot"></span> Active Engine
+      </span>
+      <button id="btn-refresh" class="btn btn-secondary">🔄 Refresh</button>
+      <button id="btn-batch-run" class="btn btn-primary">⚡ Run Sample Batch</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Top Summary Metrics Cards -->
+    <section class="stats-grid">
+      <div class="stat-card stat-total">
+        <div class="stat-header">
+          <span>TOTAL MONITORED CALLS</span>
+          <span>📈</span>
+        </div>
+        <div id="stat-total-calls" class="stat-value">--</div>
+        <div class="stat-desc">Aggregated API telemetry events</div>
+      </div>
+
+      <div class="stat-card stat-critical">
+        <div class="stat-header">
+          <span>CRITICAL INCIDENTS</span>
+          <span>🚨</span>
+        </div>
+        <div id="stat-critical-count" class="stat-value">--</div>
+        <div class="stat-desc">5xx server errors & timeouts</div>
+      </div>
+
+      <div class="stat-card stat-active">
+        <div class="stat-header">
+          <span>ACTIVE ANOMALIES</span>
+          <span>⚠️</span>
+        </div>
+        <div id="stat-active-count" class="stat-value">--</div>
+        <div class="stat-desc">Unresolved alerts requiring action</div>
+      </div>
+
+      <div class="stat-card stat-latency">
+        <div class="stat-header">
+          <span>AVG RESPONSE LATENCY</span>
+          <span>⏱️</span>
+        </div>
+        <div id="stat-avg-latency" class="stat-value">-- ms</div>
+        <div class="stat-desc">Global average across endpoints</div>
+      </div>
+    </section>
+
+    <!-- Main Content Area -->
+    <div class="layout-grid">
+      
+      <!-- Left Column: Alerts Feed & Per-API Table -->
+      <div class="main-column">
+        
+        <!-- Live Anomaly Feed -->
+        <section class="section-card">
+          <div class="section-title-bar">
+            <h2 class="section-title">
+              <span>🔔</span> Incident & AI Alert Feed
+            </h2>
+            <div class="filter-tabs">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="active">Active</button>
+              <button class="filter-btn" data-filter="CRITICAL">Critical</button>
+              <button class="filter-btn" data-filter="HIGH">High</button>
+              <button class="filter-btn" data-filter="MEDIUM">Medium</button>
+              <button class="filter-btn" data-filter="resolved">Resolved</button>
+            </div>
+          </div>
+
+          <div id="alerts-container" class="alert-feed">
+            <div class="empty-state">Loading telemetry alerts...</div>
+          </div>
+        </section>
+
+        <!-- Monitored APIs Health Overview -->
+        <section class="section-card">
+          <div class="section-title-bar">
+            <h2 class="section-title">
+              <span>🌐</span> Endpoint Health Telemetry
+            </h2>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>API Endpoint</th>
+                  <th>Total Calls</th>
+                  <th>Success Rate</th>
+                  <th>Avg Latency</th>
+                  <th>Anomalies</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="api-table-body">
+                <tr>
+                  <td colspan="6" style="text-align: center; color: var(--text-muted);">Loading endpoints...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Right Column: Interactive Ingestion & Simulator -->
+      <aside class="sidebar-column">
+        
+        <div class="section-card">
+          <div class="section-title-bar">
+            <h2 class="section-title">
+              <span>🧪</span> Telemetry Simulator
+            </h2>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">
+            Inject live API responses into <code>POST /monitor</code> to test the anomaly detection engine and AI diagnostic generator.
+          </p>
+
+          <div class="preset-buttons">
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.25rem;">QUICK TEST PRESETS:</div>
+            <button class="preset-btn" data-preset="healthy">
+              <span>✅ Normal Operational Call</span>
+              <span style="color: var(--text-sub);">200 OK / 180ms</span>
+            </button>
+            <button class="preset-btn" data-preset="crash">
+              <span>💥 500 Server Crash</span>
+              <span style="color: var(--critical);">500 Err / 0 rec</span>
+            </button>
+            <button class="preset-btn" data-preset="timeout">
+              <span>⏳ 504 Gateway Timeout</span>
+              <span style="color: var(--critical);">504 Err / 6200ms</span>
+            </button>
+            <button class="preset-btn" data-preset="empty">
+              <span>📭 Silent 0 Records Drop</span>
+              <span style="color: var(--high);">200 OK / 0 rec</span>
+            </button>
+            <button class="preset-btn" data-preset="auth">
+              <span>🔒 401 Expired Token</span>
+              <span style="color: var(--high);">401 Err</span>
+            </button>
+            <button class="preset-btn" data-preset="latency">
+              <span>🐢 Critical Latency Spike</span>
+              <span style="color: var(--critical);">5200ms / 200 OK</span>
+            </button>
+          </div>
+
+          <form id="simulator-form" class="simulator-form">
+            <div class="form-group">
+              <label for="input-api-name">API Name</label>
+              <input type="text" id="input-api-name" class="form-control" value="PatientDataAPI" required>
+            </div>
+
+            <div class="form-group">
+              <label for="input-status-code">HTTP Status Code</label>
+              <input type="number" id="input-status-code" class="form-control" value="200" required>
+            </div>
+
+            <div class="form-group">
+              <label for="input-latency">Response Time (ms)</label>
+              <input type="number" id="input-latency" class="form-control" value="180" required>
+            </div>
+
+            <div class="form-group">
+              <label for="input-records">Records Returned</label>
+              <input type="number" id="input-records" class="form-control" value="45" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.65rem;">
+              🚀 Ingest & Monitor Telemetry
+            </button>
+          </form>
+        </div>
+
+        <!-- System Architecture Information -->
+        <div class="section-card">
+          <h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 0.75rem;">📋 System Capabilities</h3>
+          <ul style="font-size: 0.8rem; color: var(--text-muted); list-style-position: inside; display: flex; flex-direction: column; gap: 0.5rem;">
+            <li><strong>Latency Thresholds:</strong> Warning &gt; 1500ms, Critical &gt; 4000ms.</li>
+            <li><strong>HTTP Anomaly Engine:</strong> Auto-flags 5xx (Server/Gateway) &amp; 4xx (Auth/Client).</li>
+            <li><strong>Silent Data Drops:</strong> Flags 200 OK with 0 records returned.</li>
+            <li><strong>AI SRE Diagnostic:</strong> Root cause analysis + actionable remediation advice.</li>
+            <li><strong>Zero-Config SQLite:</strong> Fast, persistent, ACID telemetry store.</li>
+          </ul>
+        </div>
+
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast"></div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
