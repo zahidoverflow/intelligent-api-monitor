@@ -1,6 +1,9 @@
 # 🛡️ Intelligent API Monitoring & Alert System (PulseGuard AI)
 
 <p align="center">
+  <a href="https://intelligent-api-monitor.vercel.app" target="_blank">
+    <img src="https://img.shields.io/badge/Live%20Demo-Vercel%20Production-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+  </a>
   <img src="https://img.shields.io/badge/Node.js-v18%2B-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
   <img src="https://img.shields.io/badge/Express-v5.0-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express" />
   <img src="https://img.shields.io/badge/SQLite-WAL%20Mode-003B57?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite" />
@@ -8,6 +11,8 @@
   <img src="https://img.shields.io/badge/Tests-8%2F8%20Passing-success?style=for-the-badge" alt="Tests" />
   <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="License" />
 </p>
+
+> 🔗 **Live Production Deployment**: [https://intelligent-api-monitor.vercel.app](https://intelligent-api-monitor.vercel.app)
 
 A robust, production-grade API observability and anomaly detection backend built with **Node.js (Express)**, **SQLite**, and **Google Gemini AI**. PulseGuard AI ingests real-time API health telemetry, detects multi-tier operational anomalies, and automatically generates Site Reliability Engineer (SRE)-grade diagnostic alerts complete with technical root-cause analyses and actionable remediation steps.
 

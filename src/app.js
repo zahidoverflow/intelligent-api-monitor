@@ -18,9 +18,6 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Serve frontend UI statically if files exist on disk
-app.use(express.static(path.join(__dirname, '../public')));
-
 // Explicit frontend routes (works across local and serverless with 0 filesystem dependencies)
 app.get(['/', '/index.html'], (req, res) => {
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
@@ -36,6 +33,13 @@ app.get('/js/app.js', (req, res) => {
   res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
   res.send(APP_JS);
 });
+
+// Serve frontend UI statically if files exist on disk
+try {
+  app.use(express.static(path.join(__dirname, '../public')));
+} catch (e) {
+  // Ignore in serverless environments without local filesystem
+}
 
 // API Health Check
 app.get('/health', (req, res) => {
@@ -66,3 +70,5 @@ app.use((err, req, res, next) => {
     error: err.message || 'Internal Server Error',
   });
 });
+
+export default app;
