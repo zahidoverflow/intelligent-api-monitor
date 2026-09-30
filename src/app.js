@@ -19,6 +19,12 @@ app.use(express.urlencoded({ extended: true }));
 // Serve frontend UI
 app.use(express.static(path.join(__dirname, '../public')));
 
+// Root route handler
+app.get('/', (req, res) => {
+  const indexPath = path.join(__dirname, '../public/index.html');
+  res.sendFile(indexPath);
+});
+
 // API Health Check
 app.get('/health', (req, res) => {
   res.json({
